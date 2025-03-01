@@ -1,0 +1,16 @@
+name: 'Block Non-Develop PRs to Main'
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  restrict-merge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check PR Base and Head
+        if: ${{ github.event.pull_request.base.ref == 'main' && github.event.pull_request.head.ref != 'develop' }}
+        run: exit 1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
