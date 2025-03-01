@@ -1,0 +1,49 @@
+name: Protect Develop Branch
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  check-direct-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if push is from a pull request
+        run: |
+          if [[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" == "refs/heads/develop" ]]; then
+            # Get the commit message to check if it's a merge commit
+            COMMIT_MSG=$(git log -1 --pretty=%B ${{ github.sha }})
+            if [[ $COMMIT_MSG != Merge\ pull\ request* ]]; then
+              echo "ERROR: Direct pushes to the develop branch are not allowed."
+              echo "Please create a pull request instead."
+              exit 1
+            else
+              echo "This is a merge from a pull request. Allowed."
+            fi
+          fi
+        shell: bash
+
+  notify-email:
+    runs-on: ubuntu-latest
+    needs: check-direct-push
+    if: ${{ failure() }}
+    steps:
+      - name: Send email notification
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.MAIL_SERVER }}
+          server_port: ${{ secrets.MAIL_PORT }}
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+          subject: "⚠️ Unauthorized push attempt to develop - ${{ github.repository }}"
+          body: |
+            An unauthorized direct push attempt to the develop branch was detected.
+
+            - Repository: ${{ github.repository }}
+            - User: ${{ github.actor }}
+            - Commit: ${{ github.sha }}
+
+            Please use pull requests to make changes to the develop branch.
+          to: ${{ secrets.NOTIFICATION_EMAIL }}
+          from: GitHub Actions
