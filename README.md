@@ -45,13 +45,13 @@ Function func1 executed successfully.
 To compile the application, run:
 
 ```bash
-make
+make all
 ```
 
 or manually:
 
 ```bash
-gcc -o sotest main.c -ldl
+gcc src/main.c -o test
 ```
 
 ## Project Structure
@@ -75,7 +75,7 @@ gcc -o sotest main.c -ldl
 Run the included test script:
 
 ```bash
-./sotest scripts/test.sc
+./test scripts/test.sc
 ```
 
 Check the console output to ensure all functions execute correctly.
