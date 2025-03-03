@@ -1,0 +1,6 @@
+//vs code config
+.vscode/
+
+.DS_Store
+
+build/
