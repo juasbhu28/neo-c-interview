@@ -1,4 +1,4 @@
-#define _POSIX_C_SOURCE 200112L  /* Indica conformidad con POSIX.1-2001 */
+#define _POSIX_C_SOURCE 200112L
 
 #include "reader.h"
 

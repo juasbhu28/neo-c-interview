@@ -23,11 +23,15 @@ This project implements a scripting language interpreter for testing shared func
 ### Example script (test.sc)
 
 ```terminal
-use test.so
-call example
-call test1_func
-use other.so
-call func1
+use ./build/test_lib.so
+# this is a comment
+call helloworld
+
+call goodbye
+call test_function
+unkn unknow_command
+call function_not_found
+use ./build/not_existing_lib.so
 ```
 
 ### Expected output example
