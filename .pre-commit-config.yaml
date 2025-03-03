@@ -19,4 +19,4 @@ repos:
         entry: cppcheck
         language: system
         types: [c, c++]
-        args: [--enable=all, --inconclusive, --error-exitcode=1]
+        args: [--enable=all, --suppress=missingIncludeSystem, --inconclusive, --error-exitcode=1]

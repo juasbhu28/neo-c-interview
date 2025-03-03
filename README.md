@@ -45,28 +45,34 @@ Function func1 executed successfully.
 To compile the application, run:
 
 ```bash
-make all
+make compile
 ```
 
 or manually:
 
 ```bash
-gcc src/main.c -o test
+gcc -Wall -Wextra -pedantic -std=c11 -fPIC src/main.c src/reader.c -o build/test -ldl
 ```
 
 ## Project Structure
 
 ```bash
 .
-├── doc                # Project requirements
-├── src                # Interpreter source code
-├── test_libraries     # Shared libraries for testing
-├── scripts            # Example scripts (.sc)
-├── Makefile           # Build instructions
-├── .gitignore         # Git ignore file
-├── .pre-commit.yaml   # Pre-commit hooks
-└── README.md          # Project documentation
-
+├── Makefile              # 🛠 Script to compile and run the project
+├── README.md             # 📖 Project documentation
+├── build                 # 📂 Folder where compiled files are generated
+│   └── test_lib.so       # 🏗 Compiled shared library
+├── doc                   # 📂 Additional documentation
+│   └── requirements.md
+├── reader.h              # 📌 Header file for reader.c (function declarations)
+├── scripts               # 📂 Contains test files
+│   └── test_script.sc    # 📜 Script file with commands
+├── src                   # 📂 Source code
+│   ├── main.c            # 🚀 Program entry point
+│   ├── reader.c          # 🏗 Logic to process scripts and load libraries
+│   └── reader.h          # 🔖 Declarations for `reader.c`
+└── test_libraries        # 📂 Test libraries
+    └── test_lib.c        # 📚 Implementation of dynamic functions
 
 ```
 
@@ -75,10 +81,17 @@ gcc src/main.c -o test
 Run the included test script:
 
 ```bash
-./test scripts/test.sc
+make compile
+make run
 ```
 
-Check the console output to ensure all functions execute correctly.
+Check the console output to ensure all functions execute correctly, output should be as expected.
+
+## Result Evidence
+
+The following image shows the result of running the test script:
+
+![Result Evidence](img/result_evidence.png)
 
 ## Notes
 
